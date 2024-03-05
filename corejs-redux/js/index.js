@@ -116,27 +116,115 @@
 
 /**
  * @redux_action
+ * action is pure javascript objects
  * @param { action:{ type: something, payload: something } }
  */
 
-let student = {
-  name: "kamran",
-  count: 0,
-};
+// let student = {
+//   name: "kamran",
+//   count: 0,
+// };
+
+// function reducer(state, action) {
+//   if (action.type === "INCREMENT") {
+//     return { ...state, count: state.count + 1 };
+//   } else if (action.type === "DECREMENT") {
+//     return { ...state, count: state.count - 1 };
+//   } else {
+//     return state;
+//   }
+// }
+
+// const state1Student = reducer(student, { type: "INCREMENT" });
+// console.log(state1Student);
+// const state2Student = reducer(student, { type: "DECREMENT" });
+// console.log(state2Student);
+// const state3Student = reducer(student, { type: "kana banoo" });
+// console.log(state3Student);
+
+/**
+ * @redux_action_payload
+ * action is pure javascript objects
+ * @param { action:{ type: something, payload: something } }
+ *
+ * type convention post/increment
+ * type convention post/decrement
+ */
+
+// let bank = {
+//   id: 1,
+//   name: "hbl",
+//   amount: 0,
+// };
+
+// const Deposit = "DEPOSIT";
+// const Withdraw = "WITHDRAW";
+// const CheckBalance = "CHECK_BALANCE";
+// function reducer(state, action) {
+//   if (action.type === Deposit) {
+//     return { ...state, count: state.amount + action.payload };
+//   } else if (action.type === Withdraw) {
+//     return { ...state, count: state.amount - action.payload };
+//   } else if (action.type === CheckBalance) {
+//     return state.amount;
+//   } else {
+//     return state;
+//   }
+// }
+
+// const deposit_action = {
+//   type: Deposit,
+//   payload: 1000,
+// };
+
+// const withdraw_action = {
+//   type: Withdraw,
+//   payload: 500,
+// };
+
+// const check_balance_action = {
+//   type: CheckBalance,
+// };
+
+// var bank1 = reducer(bank, deposit_action);
+// console.log(bank1)
+// bank1 = reducer(bank1, withdraw_action);
+// console.log(bank1)
+// bank1 = reducer(bank1, check_balance_action);
+// console.log(bank1)
+
+/**
+ * @param {best practices following to handle state managament}
+ */
+
+const addTodo = "TODO/ADD_TODO";
+const deleteTodo = "TODO/DELETE_TODO";
+
+
+const studentArr = [
+  { id: 1, name: "ahmad" },
+  { id: 2, name: "sudais" },
+];
 
 function reducer(state, action) {
-  if (action.type === "INCREMENT") {
-    return { ...state, count: state.count + 1 };
-  } else if (action.type === "DECREMENT") {
-    return { ...state, count: state.count - 1 };
-  } else {
-    return state;
+  switch (action.type) {
+    case addTodo:
+      return state.push(action.payload);
+    case deleteTodo:
+      return state.shift();
+    default:
+      return state;
   }
 }
 
-const state1Student = reducer(student, { type: "INCREMENT" });
-console.log(state1Student);
-const state2Student = reducer(student, { type: "DECREMENT" });
-console.log(state2Student);
-const state3Student = reducer(student, { type: "kana banoo" });
-console.log(state3Student);
+console.log(studentArr);
+reducer(studentArr, {
+  type: addTodo,
+  payload: { name: "imran", age: 12, id: 3 },
+});
+
+console.log(studentArr);
+reducer(studentArr, {
+  type: deleteTodo,
+});
+console.log(studentArr);
