@@ -5,6 +5,7 @@ let initailCounter = {
   count: 0,
 };
 
+// 
 // this will create a centralized store
 // the createStore can takes reducer function as callback
 const store = createStore(reducer);
