@@ -36,13 +36,13 @@
 // store.dispatch({ type: "IncrementBY10" ,payload: 10});
 // store.dispatch({ type: "IncrementBY10" ,payload: 10});
 
-
-
 /**
  * @redux_best_practices_followed
  */
 
 import { createStore } from "@reduxjs/toolkit";
+
+
 const initailState = [
   {
     name: "kamran",
@@ -96,10 +96,14 @@ const initailState = [
   },
 ];
 
+
+
+// if you have redux dev tool and you want to connect your app then use this
+const REDUX_CONNECTION = window?.__REDUX_DEVTOOLS_EXTENSION__?.();
 const FITLTER_BY_AGE = "student/filterByAge";
 const FITLTER_BY_CITY = "student/filterByCity";
-const store = createStore(reducer);
-
+const store = createStore(reducer, REDUX_CONNECTION);
+console.dir(store)
 function reducer(state = initailState, action) {
   switch (action.type) {
     case FITLTER_BY_AGE:
@@ -115,5 +119,9 @@ store.subscribe(() => {
   console.log(store.getState());
 });
 
-// store.dispatch({ type: FITLTER_BY_AGE, payload: { age: 18 } });
+store.dispatch({ type: FITLTER_BY_AGE, payload: { age: 18 } });
 store.dispatch({ type: FITLTER_BY_CITY, payload: { city: "peshawar" } });
+
+
+
+
