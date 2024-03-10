@@ -1,3 +1,6 @@
+// import product arrays used as initial state
+import productData from "../../assets/productData";
+
 // action types
 export const CART_ITEM_ADD = "cart/item_add";
 export const CART_ITEM_REMOVE = "cart/item_remove";
