@@ -3,15 +3,15 @@ export const CART_ITEM_ADD = "cart/item_add";
 export const CART_ITEM_REMOVE = "cart/item_remove";
 
 // action creators
-function CartItemAdd(id: number, quantity: number) {
+export function CartItemAdd(id: number, quantity: number) {
   return {
     type: CART_ITEM_ADD,
     payload: { id, quantity },
   };
 }
-function CartItemRemove(id: number) {
+export function CartItemRemove(id: number) {
   return {
-    type: CART_ITEM_ADD,
+    type: CART_ITEM_REMOVE,
     payload: { id },
   };
 }

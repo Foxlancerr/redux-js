@@ -1,9 +1,18 @@
-import React from 'react';
+import React from "react";
+import { useSelector } from "react-redux";
 
 function App() {
+  const cartList = useSelector((state) => state.cartList);
+
   return (
     <div>
-      <h1>Hello world</h1>
+      {cartList?.map(({ id, quantity }) => {
+        return (
+          <p key={id}>
+            Id:{id} Quantity:{quantity}
+          </p>
+        );
+      })}
     </div>
   );
 }
