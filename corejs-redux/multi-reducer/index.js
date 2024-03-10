@@ -1,23 +1,18 @@
 import { combineReducers, createStore } from "@reduxjs/toolkit";
 
 import ProductListReducer, {
-  CART_ITEM_ADD,
-  CART_ITEM_QUANTITY_DEC,
-  CART_ITEM_QUANTITY_INC,
-  CART_ITEM_REMOVED,
+  cardItemAdd,
+  cardItemQuantityDecrement,
+  cardItemQuantityIncrement,
+  cardItemRemove,
 } from "./reducer/CartList";
+
 import watchListReducer, {
-  WATCHLIST_ITEM_ADD,
-  WATCHLIST_ITEM_REMOVED,
+  watchListItemAdd,
+  watchListItemRemove,
 } from "./reducer/WatchList";
 
 const REDUX_CONNECTION = window.__REDUX_DEVTOOLS_EXTENSION__?.();
-
-// const initailState = {
-//   productList: [],
-//   cartItem: [],
-//   watchList: [],
-// };
 
 const reducerFunc = combineReducers({
   productList: [],
@@ -27,57 +22,21 @@ const reducerFunc = combineReducers({
 
 const store = createStore(reducerFunc, REDUX_CONNECTION);
 
-console.log(store.getState());
+store.dispatch(cardItemAdd(1, 10));
+store.dispatch(cardItemAdd(2, 10));
+store.dispatch(cardItemAdd(3, 10));
+store.dispatch(cardItemAdd(4, 10));
+store.dispatch(cardItemAdd(5, 10));
 
-store.dispatch({ type: CART_ITEM_ADD, payload: { id: 1, quantity: 1 } });
-store.dispatch({ type: CART_ITEM_ADD, payload: { id: 2, quantity: 1 } });
-store.dispatch({ type: CART_ITEM_ADD, payload: { id: 3, quantity: 1 } });
-store.dispatch({ type: CART_ITEM_ADD, payload: { id: 4, quantity: 1 } });
-store.dispatch({ type: CART_ITEM_ADD, payload: { id: 5, quantity: 1 } });
-store.dispatch({ type: CART_ITEM_ADD, payload: { id: 6, quantity: 1 } });
-store.dispatch({ type: CART_ITEM_ADD, payload: { id: 7, quantity: 1 } });
-store.dispatch({ type: CART_ITEM_ADD, payload: { id: 8, quantity: 1 } });
-store.dispatch({ type: CART_ITEM_ADD, payload: { id: 9, quantity: 1 } });
-store.dispatch({ type: CART_ITEM_ADD, payload: { id: 10, quantity: 1 } });
+store.dispatch(cardItemRemove(4));
 
-console.log(store.getState());
+store.dispatch(cardItemQuantityIncrement(2, 5));
+store.dispatch(cardItemQuantityIncrement(2, 5));
 
-store.dispatch({ type: CART_ITEM_REMOVED, payload: { id: 1 } });
-store.dispatch({ type: CART_ITEM_REMOVED, payload: { id: 2 } });
+store.dispatch(cardItemQuantityDecrement(3, 2));
+store.dispatch(cardItemQuantityDecrement(3, 2));
 
-console.log(store.getState());
-
-store.dispatch({ type: CART_ITEM_QUANTITY_INC, payload: { id: 10 } });
-store.dispatch({ type: CART_ITEM_QUANTITY_INC, payload: { id: 10 } });
-store.dispatch({ type: CART_ITEM_QUANTITY_INC, payload: { id: 9 } });
-store.dispatch({ type: CART_ITEM_QUANTITY_INC, payload: { id: 9 } });
-
-console.log(store.getState());
-
-//increment or decrement quantities
-store.dispatch({ type: CART_ITEM_QUANTITY_INC, payload: { id: 5 } });
-store.dispatch({ type: CART_ITEM_QUANTITY_INC, payload: { id: 5 } });
-store.dispatch({ type: CART_ITEM_QUANTITY_INC, payload: { id: 5 } });
-store.dispatch({ type: CART_ITEM_QUANTITY_INC, payload: { id: 5 } });
-store.dispatch({ type: CART_ITEM_QUANTITY_INC, payload: { id: 5 } });
-store.dispatch({ type: CART_ITEM_QUANTITY_DEC, payload: { id: 5 } });
-store.dispatch({ type: CART_ITEM_QUANTITY_DEC, payload: { id: 5 } });
-store.dispatch({ type: CART_ITEM_QUANTITY_DEC, payload: { id: 5 } });
-store.dispatch({ type: CART_ITEM_QUANTITY_DEC, payload: { id: 5 } });
-store.dispatch({ type: CART_ITEM_QUANTITY_DEC, payload: { id: 5 } });
-store.dispatch({ type: CART_ITEM_QUANTITY_DEC, payload: { id: 5 } });
-store.dispatch({ type: CART_ITEM_QUANTITY_DEC, payload: { id: 5 } });
-store.dispatch({ type: CART_ITEM_QUANTITY_DEC, payload: { id: 5 } });
-store.dispatch({ type: CART_ITEM_QUANTITY_DEC, payload: { id: 5 } });
-store.dispatch({ type: CART_ITEM_QUANTITY_DEC, payload: { id: 5 } });
-console.log(store.getState());
-
-// watchlist item added or removed
-store.dispatch({ type: WATCHLIST_ITEM_ADD, payload: { id: 5 } });
-store.dispatch({ type: WATCHLIST_ITEM_ADD, payload: { id: 4 } });
-store.dispatch({ type: WATCHLIST_ITEM_ADD, payload: { id: 3 } });
-store.dispatch({ type: WATCHLIST_ITEM_ADD, payload: { id: 2 } });
-store.dispatch({ type: WATCHLIST_ITEM_REMOVED, payload: { id: 2 } });
-store.dispatch({ type: WATCHLIST_ITEM_REMOVED, payload: { id: 4 } });
-
-console.log(store.getState());
+store.dispatch(watchListItemAdd(1));
+store.dispatch(watchListItemAdd(2));
+store.dispatch(watchListItemAdd(3));
+store.dispatch(watchListItemRemove(2));

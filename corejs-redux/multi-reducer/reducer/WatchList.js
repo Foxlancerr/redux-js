@@ -1,8 +1,17 @@
+// action types
 export const WATCHLIST_ITEM_ADD = "watchlist/item_add";
 export const WATCHLIST_ITEM_REMOVED = "watchlist/item_remove";
 
-const initailState = []
-export default function watchListReducer(state = initailState, action) {
+// action creators
+export function watchListItemAdd(id) {
+  return { type: WATCHLIST_ITEM_ADD, payload: { id } };
+}
+export function watchListItemRemove(id) {
+  return { type: WATCHLIST_ITEM_REMOVED, payload: { id } };
+}
+
+// reducers
+export default function watchListReducer(state = [], action) {
   switch (action.type) {
     case WATCHLIST_ITEM_ADD:
       return [...state, action.payload];
