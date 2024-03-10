@@ -10,6 +10,8 @@ const CART_ITEM_ADD = "cart/item_added";
 const CART_ITEM_REMOVED = "cart/item_remove";
 const CART_ITEM_QUANTITY_INC = "cart/quantity_inc";
 const CART_ITEM_QUANTITY_DEC = "cart/quantity_dec";
+const WATCHLIST_ITEM_ADD = "watchlist/item_add";
+const WATCHLIST_ITEM_REMOVED = "watchlist/item_remove";
 const store = createStore(reducerFunc, REDUX_CONNECTION);
 
 function reducerFunc(state = initailState, action) {
@@ -41,7 +43,6 @@ function reducerFunc(state = initailState, action) {
 
         cartItem: state.cartItem.map((item) => {
           if (action.payload.id === item.id) {
-
             // check the quantity must be 1 or greater
             if (item.quantity <= 1) {
               return item;
@@ -50,6 +51,16 @@ function reducerFunc(state = initailState, action) {
           }
           return item;
         }),
+      };
+    case WATCHLIST_ITEM_ADD:
+      return { ...state, watchList: [...state.watchList, action.payload] };
+
+    case WATCHLIST_ITEM_REMOVED:
+      return {
+        ...state,
+        watchList: state.watchList.filter(
+          (item) => item.id !== action.payload.id
+        ),
       };
     default:
       return state;
@@ -81,9 +92,9 @@ store.dispatch({ type: CART_ITEM_QUANTITY_INC, payload: { id: 10 } });
 store.dispatch({ type: CART_ITEM_QUANTITY_INC, payload: { id: 9 } });
 store.dispatch({ type: CART_ITEM_QUANTITY_INC, payload: { id: 9 } });
 
-
 console.log(store.getState());
 
+//increment or decrement quantities
 store.dispatch({ type: CART_ITEM_QUANTITY_INC, payload: { id: 5 } });
 store.dispatch({ type: CART_ITEM_QUANTITY_INC, payload: { id: 5 } });
 store.dispatch({ type: CART_ITEM_QUANTITY_INC, payload: { id: 5 } });
@@ -100,4 +111,11 @@ store.dispatch({ type: CART_ITEM_QUANTITY_DEC, payload: { id: 5 } });
 store.dispatch({ type: CART_ITEM_QUANTITY_DEC, payload: { id: 5 } });
 store.dispatch({ type: CART_ITEM_QUANTITY_DEC, payload: { id: 5 } });
 
+// watchlist item added or removed
+store.dispatch({ type: WATCHLIST_ITEM_ADD, payload: { id: 5 } });
+store.dispatch({ type: WATCHLIST_ITEM_ADD, payload: { id: 4 } });
+store.dispatch({ type: WATCHLIST_ITEM_ADD, payload: { id: 3 } });
+store.dispatch({ type: WATCHLIST_ITEM_ADD, payload: { id: 2 } });
+store.dispatch({ type: WATCHLIST_ITEM_REMOVED, payload: { id: 2 } });
+store.dispatch({ type: WATCHLIST_ITEM_REMOVED, payload: { id: 4 } });
 console.log(store.getState());
