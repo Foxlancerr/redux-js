@@ -1,69 +1,31 @@
-import { createStore } from "@reduxjs/toolkit";
+import { combineReducers, createStore } from "@reduxjs/toolkit";
+
+import ProductListReducer, {
+  CART_ITEM_ADD,
+  CART_ITEM_QUANTITY_DEC,
+  CART_ITEM_QUANTITY_INC,
+  CART_ITEM_REMOVED,
+} from "./reducer/CartList";
+import watchListReducer, {
+  WATCHLIST_ITEM_ADD,
+  WATCHLIST_ITEM_REMOVED,
+} from "./reducer/WatchList";
+
 const REDUX_CONNECTION = window.__REDUX_DEVTOOLS_EXTENSION__?.();
-const initailState = {
+
+// const initailState = {
+//   productList: [],
+//   cartItem: [],
+//   watchList: [],
+// };
+
+const reducerFunc = combineReducers({
   productList: [],
-  cartItem: [],
-  watchList: [],
-};
+  cartItem: ProductListReducer,
+  watchList: watchListReducer,
+});
 
-const CART_ITEM_ADD = "cart/item_added";
-const CART_ITEM_REMOVED = "cart/item_remove";
-const CART_ITEM_QUANTITY_INC = "cart/quantity_inc";
-const CART_ITEM_QUANTITY_DEC = "cart/quantity_dec";
-const WATCHLIST_ITEM_ADD = "watchlist/item_add";
-const WATCHLIST_ITEM_REMOVED = "watchlist/item_remove";
 const store = createStore(reducerFunc, REDUX_CONNECTION);
-
-function reducerFunc(state = initailState, action) {
-  switch (action.type) {
-    case CART_ITEM_ADD:
-      return { ...state, cartItem: [...state.cartItem, action.payload] };
-    case CART_ITEM_REMOVED:
-      return {
-        ...state,
-        cartItem: state.cartItem.filter((item) => {
-          return item.id !== action.payload.id;
-        }),
-      };
-    case CART_ITEM_QUANTITY_INC:
-      return {
-        ...state,
-
-        cartItem: state.cartItem.map((item) => {
-          if (action.payload.id === item.id) {
-            return { ...item, quantity: item.quantity + 1 };
-          }
-          return item;
-        }),
-      };
-    case CART_ITEM_QUANTITY_DEC:
-      return {
-        ...state,
-        cartItem: state.cartItem.map((item) => {
-          if (action.payload.id === item.id) {
-            // check the quantity must be 1 or greater
-            if (item.quantity <= 1) {
-              return item;
-            }
-            return { ...item, quantity: item.quantity - 1 };
-          }
-          return item;
-        }),
-      };
-    case WATCHLIST_ITEM_ADD:
-      return { ...state, watchList: [...state.watchList, action.payload] };
-
-    case WATCHLIST_ITEM_REMOVED:
-      return {
-        ...state,
-        watchList: state.watchList.filter(
-          (item) => item.id !== action.payload.id
-        ),
-      };
-    default:
-      return state;
-  }
-}
 
 console.log(store.getState());
 
@@ -117,4 +79,5 @@ store.dispatch({ type: WATCHLIST_ITEM_ADD, payload: { id: 3 } });
 store.dispatch({ type: WATCHLIST_ITEM_ADD, payload: { id: 2 } });
 store.dispatch({ type: WATCHLIST_ITEM_REMOVED, payload: { id: 2 } });
 store.dispatch({ type: WATCHLIST_ITEM_REMOVED, payload: { id: 4 } });
+
 console.log(store.getState());
